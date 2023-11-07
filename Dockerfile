@@ -6,7 +6,7 @@ ENV NODE_ENV=development
 EXPOSE 3000
 CMD [ "npm", 'run', "dev" ]
 
-FROM node:17.1.0-alpine3.12 AS dependencies
+FROM node:20-alpine AS dependencies
 ENV NODE_ENV=production
 WORKDIR /app
 COPY package.json  ./
@@ -16,6 +16,7 @@ FROM node:20-alpine AS builder
 ENV NODE_ENV=development
 WORKDIR /app
 COPY . .
+COPY .env .
 RUN npm i && NODE_ENV=production npm run build
 
 FROM node:20-alpine AS production
