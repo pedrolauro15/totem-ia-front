@@ -1,9 +1,12 @@
+'use client'
+import { useRouter } from 'next/navigation'
 import Button from './components/button'
 import Footer from './components/footer'
 import Header from './components/header'
-import Link from 'next/link'
+
 
 export default function Home() {
+  const router = useRouter()
   return (
     <main className='w-screen h-screen flex flex-col'>
       <Header />
@@ -13,8 +16,11 @@ export default function Home() {
       <div className='flex flex-col flex-1 items-center justify-center'>
         <div className='flex flex-col gap-6 min-w-[30rem]'>
           <Button>Imprimir senha</Button>
-          <Button>
-            <Link href='/face-identifier'>Reconhecimento facial</Link>
+          <Button onClick={() => {
+            router.push('identify')
+          }}>
+            Reconhecimento facial
+            {/* <Link className='flex items-center justify-center'  href=''><span className='py-7 px-8'>Reconhecimento facial</span></Link> */}
           </Button>
         </div>
       </div>

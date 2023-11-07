@@ -12,6 +12,9 @@ const config: Config = {
         brand: {
           DEFAULT: '#1578E0',
           500: '#1578E0'
+        },
+        background: {
+          DEFAULT: '#FAFAFA'
         }
       },
       backgroundImage: {

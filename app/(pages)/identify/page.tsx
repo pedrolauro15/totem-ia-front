@@ -1,29 +1,29 @@
 'use client'
-import { CameraFrame } from "@/app/components/cameraFrame"
-import { toast } from 'react-toastify'
-import Footer from "@/app/components/footer"
-import Header from "@/app/components/header"
-import { useCallback, useEffect, useState } from "react";
-import Webcam from 'react-webcam';
-import { CameraOptions, useFaceDetection } from 'react-use-face-detection';
 import FaceDetection from '@mediapipe/face_detection';
 import { Camera } from '@mediapipe/camera_utils';
-import { useCameraTimer } from "@/app/hooks/useCameraTimer";
-import Image from "next/image";
-import Button from "@/app/components/button";
-import { api } from "@/app/lib/axios"
-import { ApiRecognitionResponse } from "@/app/models/apiRecognitionResponse"
 import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import { CameraOptions, useFaceDetection } from "react-use-face-detection"
+import Webcam from "react-webcam"
+import { CameraFrame } from '@/app/components/cameraFrame';
+import Image from 'next/image';
+import { api } from '@/app/lib/axios';
+import { useCameraTimer } from '@/app/hooks/useCameraTimer';
+import { ApiRecognitionResponse } from '@/app/models/apiRecognitionResponse';
+import Button from '@/app/components/button';
+import dynamic from 'next/dynamic';
 
 
-export default function FaceIdentifierPage() {
+function IdentifyPage() {
   const [windowWidth, setWindwowWidth] = useState(1080)
   const [base64Img, setBase64Img] = useState('')
   const router = useRouter()
-  const { webcamRef, boundingBox, isLoading, detected, facesDetected } = useFaceDetection({
+  const { webcamRef, boundingBox, detected } = useFaceDetection({
     faceDetectionOptions: {
       model: 'short',
       minDetectionConfidence: 0.8,
+      selfieMode: false
     },
     faceDetection: new FaceDetection.FaceDetection({
       locateFile: (file) => {
@@ -65,14 +65,19 @@ export default function FaceIdentifierPage() {
       toast('Encontramos seu cadastro!', { pauseOnHover: true, type: 'success' })
       router.push(`/client-checkin?ref=${result.data.personId}`)
     }
+    else {
+      toast('Não encontramos seu cadastro!', { pauseOnHover: true, type: 'info' })
+      router.push(`/client-qrcode`)
+    }
   }, [base64Img, router])
 
   useEffect(() => {
     setWindwowWidth(window.innerWidth || 1080)
   }, [])
+  
 
   return (
-    <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col">
       <h1 className="px-8 mt-12 mb-24 text-4xl leading-relaxed">
         Escolha seu tipo de atendimento: {' '} <br />
         <strong className="font-medium text-brand">(Reconhecimento facial)</strong>
@@ -137,3 +142,9 @@ export default function FaceIdentifierPage() {
     </div>
   )
 }
+// export it with SSR disabled
+const IdPage = dynamic(() => Promise.resolve(IdentifyPage), {
+ssr: false,
+})
+
+export default IdPage

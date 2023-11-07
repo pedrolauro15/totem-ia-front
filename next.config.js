@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  headers: () => [
+    {
+      source: '/:path*',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'no-store',
+        },
+      ],
+    },
+  ],
   images: {
     remotePatterns: [
       {
@@ -12,7 +23,8 @@ const nextConfig = {
         port: '3333'
       }
     ],
-  }
+  },
+  
 }
 
 module.exports = nextConfig

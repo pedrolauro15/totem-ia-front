@@ -3,7 +3,8 @@ import { tv } from "tailwind-variants"
 
 interface Props {
   color?: "primary"
-  variant?: "contained" | "outlined"
+  variant?: "contained" | "outlined",
+  padding?: "normal" | "flat"
 }
 
 const btn = tv({
@@ -12,6 +13,10 @@ const btn = tv({
     variant: {
       contained: "border-brand",
       outlined: "border bg-transparent text-brand"
+    },
+    padding:  {
+      normal:"",
+      flat: "p-0"
     }
   },
   defaultVariants: {
@@ -19,6 +24,6 @@ const btn = tv({
   }
 })
 
-export default function Button({className, color = 'primary', variant, ...rest}: Props & JSX.IntrinsicElements['button']) {
-  return <button  {...rest} className={twMerge(btn({ variant }), className)} />
+export default function Button({className, color = 'primary', variant, padding ='normal', ...rest}: Props & JSX.IntrinsicElements['button']) {
+  return <button  {...rest} className={twMerge(btn({ variant, padding }), className)} />
 }
