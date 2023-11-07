@@ -6,6 +6,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'healthdev-assets.s3.us-east-1.amazonaws.com',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3333'
+      }
     ],
   }
 }

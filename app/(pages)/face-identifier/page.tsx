@@ -72,74 +72,68 @@ export default function FaceIdentifierPage() {
   }, [])
 
   return (
-    <main className="flex flex-col w-screen h-screen">
-      <Header />
-      <div className="flex flex-1 flex-col">
-        <h1 className="px-8 mt-12 mb-24 text-4xl leading-relaxed">
-          Escolha seu tipo de atendimento: {' '} <br />
-          <strong className="font-medium text-brand">(Reconhecimento facial)</strong>
-        </h1>
+    <div className="flex flex-1 flex-col">
+      <h1 className="px-8 mt-12 mb-24 text-4xl leading-relaxed">
+        Escolha seu tipo de atendimento: {' '} <br />
+        <strong className="font-medium text-brand">(Reconhecimento facial)</strong>
+      </h1>
 
-        <div className="self-center flex relative bg-blue" style={{ width: SIZE, height: SIZE }}>
-          <div className="z-50">
-            {
-              !base64Img && boundingBox.map(box => (
-                <div
-                  key={box.rectId}
-                  style={{
-                    width: `${box.width * 100}%`,
-                    height: `${box.height * 100}%`,
-                    top: `${box.yCenter * 100}%`,
-                    left: `${box.xCenter * 100}%`,
-                  }}
-                  className="absolute z-50 left-1/2 border-4 border-brand rounded-3xl"
-                />
-              ))
-            }
-            {
-              isTimerDown && (
-                <div className="z-50 absolute w-full h-full flex items-center justify-center bg-black/20">
-                  <strong className="text-brand text-[140px] font-normal">{timer}</strong>
-                </div>
-              )
-            }
-            {<Webcam
-              ref={webcamRef}
-              forceScreenshotSourceSize
-              screenshotFormat="image/jpeg"
-              style={{
-                width: SIZE,
-                height: SIZE,
-                display: base64Img ? 'none' : 'inherit'
-              }}
-              width={SIZE}
-              height={SIZE}
-              autoPlay
-              muted
-              className="h-full w-full object-cover"
-            />}
-            {base64Img &&
-              <Image src={base64Img} className="h-full w-full object-cover" width={SIZE} height={SIZE} alt="Screenshot" />
-            }
-          </div>
-
-          <CameraFrame />
+      <div className="self-center flex relative bg-blue" style={{ width: SIZE, height: SIZE }}>
+        <div className="z-50">
+          {
+            !base64Img && boundingBox.map(box => (
+              <div
+                key={box.rectId}
+                style={{
+                  width: `${box.width * 100}%`,
+                  height: `${box.height * 100}%`,
+                  top: `${box.yCenter * 100}%`,
+                  left: `${box.xCenter * 100}%`,
+                }}
+                className="absolute z-50 left-1/2 border-4 border-brand rounded-3xl"
+              />
+            ))
+          }
+          {
+            isTimerDown && (
+              <div className="z-50 absolute w-full h-full flex items-center justify-center bg-black/20">
+                <strong className="text-brand text-[140px] font-normal">{timer}</strong>
+              </div>
+            )
+          }
+          {<Webcam
+            ref={webcamRef}
+            forceScreenshotSourceSize
+            screenshotFormat="image/jpeg"
+            style={{
+              width: SIZE,
+              height: SIZE,
+              display: base64Img ? 'none' : 'inherit'
+            }}
+            width={SIZE}
+            height={SIZE}
+            autoPlay
+            muted
+            className="h-full w-full object-cover"
+          />}
+          {base64Img &&
+            <Image src={base64Img} className="h-full w-full object-cover" width={SIZE} height={SIZE} alt="Screenshot" />
+          }
         </div>
-        {!base64Img && <h2 className="text-center max-w-xl self-center mt-20 text-2xl text-slate-500">Centralize seu rosto na moldura e fique parado para realizar o reconhecimento</h2>}
-        {base64Img && (
-          <div className="flex flex-col gap-4 self-center mt-16" style={{ width: SIZE * 0.7 }}>
-            <Button onClick={handleConfirmImageSend}>
-              Enviar
-            </Button>
-            <Button variant="outlined" onClick={handleClearImage}>
-              Repetir
-            </Button>
-          </div>
-        )}
+
+        <CameraFrame />
       </div>
-      <div className="px-8">
-        <Footer />
-      </div>
-    </main>
+      {!base64Img && <h2 className="text-center max-w-xl self-center mt-20 text-2xl text-slate-500">Centralize seu rosto na moldura e fique parado para realizar o reconhecimento</h2>}
+      {base64Img && (
+        <div className="flex flex-col gap-4 self-center mt-16" style={{ width: SIZE * 0.7 }}>
+          <Button onClick={handleConfirmImageSend}>
+            Enviar
+          </Button>
+          <Button variant="outlined" onClick={handleClearImage}>
+            Repetir
+          </Button>
+        </div>
+      )}
+    </div>
   )
 }
