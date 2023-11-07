@@ -1,7 +1,7 @@
-
 import Button from './components/button'
 import Footer from './components/footer'
 import Header from './components/header'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -13,7 +13,9 @@ export default function Home() {
       <div className='flex flex-col flex-1 items-center justify-center'>
         <div className='flex flex-col gap-6 min-w-[30rem]'>
           <Button>Imprimir senha</Button>
-          <Button>Reconhecimento facial</Button>
+          <Button>
+            <Link href='/face-identifier'>Reconhecimento facial</Link>
+          </Button>
         </div>
       </div>
       <div className='px-8'>
